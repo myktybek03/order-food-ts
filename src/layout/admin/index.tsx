@@ -1,12 +1,17 @@
 import React from 'react'
-import Header from './Header'
+import { Grid } from '@mui/material'
+import { Outlet } from 'react-router-dom'
+import AdminHeader from './Header'
 
-const Admin = () => {
+const AdminLayout = () => {
     return (
-        <div>
-            <Header />
-        </div>
+        <>
+            <AdminHeader />
+            <Grid>
+                <Outlet />
+            </Grid>
+        </>
     )
 }
 
-export default Admin
+export default AdminLayout

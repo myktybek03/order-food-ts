@@ -1,10 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-
-enum UserRoles {
-    ADMIN = 'ADMIN',
-    USER = 'USER',
-    GUEST = 'GUEST',
-}
+import { UserRoles } from '../../common/utils/types'
 
 interface AuthState {
     isAuthorized: boolean
@@ -19,7 +14,7 @@ interface AuthState {
 const getInitialState = () => {
     const jsonData = localStorage.getItem('AUTH')
     if (jsonData) {
-        const userData = JSON.parse(jsonData) as Omit<AuthState, 'isAuthprized'>
+        const userData = JSON.parse(jsonData) as Omit<AuthState, 'isAuthorized'>
         return {
             isAuthorized: true,
             token: userData.token,
@@ -50,5 +45,4 @@ const authSlice = createSlice({
 })
 
 export default authSlice
-
 export const authActions = authSlice.actions

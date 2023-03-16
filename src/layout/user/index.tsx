@@ -1,16 +1,28 @@
-import React, { useState, useCallback } from 'react'
+import { styled } from '@mui/material'
+import React, { useCallback, useState } from 'react'
 import { Outlet } from 'react-router-dom'
+import Header from './Header'
 
-const User = () => {
-    const [isBasketVisible, setIsBasketVisible] = useState(false)
+const UserLayout = () => {
+    const [isBasketVisible, setBasketVisible] = useState(false)
+
+    const showBasketHandler = useCallback(() => {
+        setBasketVisible((prevState) => !prevState)
+    }, [])
 
     return (
         <>
-            <div>
+            <Header onShowBasket={showBasketHandler} />
+
+            <Content>
                 <Outlet />
-            </div>
+            </Content>
         </>
     )
 }
 
-export default User
+export default UserLayout
+
+const Content = styled('div')(() => ({
+    marginTop: ' 101px',
+}))
