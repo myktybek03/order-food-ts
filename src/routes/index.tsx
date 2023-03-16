@@ -8,6 +8,7 @@ import UserLayout from '../layout/user'
 import AdminLayout from '../layout/admin'
 import SignIn from '../pages/guest/SignIn'
 import { UserRoles } from '../common/utils/types'
+import SignUp from '../pages/guest/SignUp'
 // import SignUp from '../pages/guest/SignUp'
 
 const AppRoutes = () => {
@@ -16,7 +17,6 @@ const AppRoutes = () => {
     const isAllowed = (roles: UserRoles[]) => {
         return roles.includes(role)
     }
-
     return (
         <Routes>
             <Route
@@ -55,7 +55,7 @@ const AppRoutes = () => {
                         />
                     }
                 />
-                {/* <Route
+                <Route
                     path="signup"
                     element={
                         <ProtectedRoute
@@ -69,7 +69,7 @@ const AppRoutes = () => {
                             component={SignUp}
                         />
                     }
-                /> */}
+                />
                 <Route
                     path="signin"
                     element={

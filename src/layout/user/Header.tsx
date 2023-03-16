@@ -1,4 +1,4 @@
-import { Button, styled } from '@mui/material'
+import { Button, Grid, styled } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -66,16 +66,18 @@ const Header = ({ onShowBasket }: Props) => {
     return (
         <Container>
             <Logo onClick={() => navigate('/')}>ReactMeals</Logo>
-            <BasketButton
-                className={animationClass}
-                onClick={showBasketHandler}
-                count={0}
-            />
-            {isAuthorized ? (
-                <Button onClick={signOutHandler}>Sign Out</Button>
-            ) : (
-                <Button onClick={signInHandler}>Sign In</Button>
-            )}
+            <GridStyle>
+                <BasketButton
+                    className={animationClass}
+                    onClick={showBasketHandler}
+                    count={0}
+                />
+                {isAuthorized ? (
+                    <ButtonStyle onClick={signOutHandler}>Sign Out</ButtonStyle>
+                ) : (
+                    <ButtonStyle onClick={signInHandler}>Sign In</ButtonStyle>
+                )}
+            </GridStyle>
         </Container>
     )
 }
@@ -100,4 +102,18 @@ const Logo = styled('p')(() => ({
     lineHeight: '3.5625rem',
     color: '#FFFFFF',
     margin: 0,
+}))
+
+const GridStyle = styled(Grid)(() => ({
+    display: 'flex',
+    alignItems: 'center',
+    gap: '15px',
+}))
+
+const ButtonStyle = styled(Button)(() => ({
+    color: '#fff',
+    background: 'blue',
+    ':hover': {
+        background: '00bfff',
+    },
 }))
