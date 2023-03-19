@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { UserRoles } from '../../common/utils/types'
+import { UserRoles } from '../../common/types'
+import { signIn, signOut, signUp } from './auth.thunk'
 
 interface AuthState {
     isAuthorized: boolean
@@ -42,6 +43,37 @@ const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {},
+
+    extraReducers: (builder) => {
+        builder.addCase(signIn.fulfilled, (state, action) => {
+            state.isAuthorized = true
+            state.token = action.payload.token
+            state.user = {
+                email: action.payload.user.email,
+                role: action.payload.user.role,
+                name: action.payload.user.name,
+            }
+        })
+        builder.addCase(signUp.fulfilled, (state, action) => {
+            state.isAuthorized = true
+            state.token = action.payload.token
+            state.user = {
+                email: action.payload.user.email,
+                role: action.payload.user.role,
+                name: action.payload.user.name,
+            }
+        })
+
+        builder.addCase(signOut.fulfilled, (state) => {
+            state.isAuthorized = false
+            state.token = ''
+            state.user = {
+                email: '',
+                role: UserRoles.GUEST,
+                name: '',
+            }
+        })
+    },
 })
 
 export default authSlice

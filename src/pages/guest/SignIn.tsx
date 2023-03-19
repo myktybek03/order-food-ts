@@ -8,9 +8,10 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 import { AppDispatch } from '../../store/store'
 import { signIn } from '../../store/auth/auth.thunk'
+import useAppDispatch from '../../hooks/useAppDispatch'
 
 const SignIn = () => {
-    const dispatch = useDispatch<AppDispatch>()
+    const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const [loginError, setLoginError] = useState('')
 
@@ -31,12 +32,10 @@ const SignIn = () => {
     })
 
     const submitHandler = (values: FormSchema) => {
-        console.log(values)
-
         dispatch(signIn(values))
             .unwrap()
             .then(() => navigate('/'))
-            .catch((e) => setLoginError(e.response.data.message))
+            .catch((e) => setLoginError(e))
     }
 
     return (

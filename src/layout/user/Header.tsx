@@ -51,9 +51,6 @@ const Header = ({ onShowBasket }: Props) => {
         navigate('/signin')
     }
     const showBasketHandler = () => {
-        // if (!isAuthorized) {
-        //     return showAuthModal(true)
-        // }
         return onShowBasket()
     }
     const goToOrderPageHandler = () => {

@@ -7,8 +7,9 @@ import ProtectedRoute from './ProtectedRoute'
 import UserLayout from '../layout/user'
 import AdminLayout from '../layout/admin'
 import SignIn from '../pages/guest/SignIn'
-import { UserRoles } from '../common/utils/types'
+import { UserRoles } from '../common/types'
 import SignUp from '../pages/guest/SignUp'
+import Meals from '../pages/admin/Meals.page'
 // import SignUp from '../pages/guest/SignUp'
 
 const AppRoutes = () => {
@@ -103,7 +104,7 @@ const AppRoutes = () => {
                         <ProtectedRoute
                             isAllowed={isAllowed([UserRoles.ADMIN])}
                             fallBackPath="/"
-                            component={() => <p>AdminMeals</p>}
+                            component={Meals}
                         />
                     }
                 />

@@ -7,18 +7,26 @@ import { Link, useNavigate } from 'react-router-dom'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 import { AppDispatch } from '../../store/store'
-import { signIn } from '../../store/auth/auth.thunk'
+import { signUp } from '../../store/auth/auth.thunk'
+import { UserRoles } from '../../common/types'
 
 const SignUp = () => {
     const dispatch = useDispatch<AppDispatch>()
     const navigate = useNavigate()
     const [loginError, setLoginError] = useState('')
 
-    const schema = z.object({
-        name: z.string().email('Атынды жаз'),
-        email: z.string().email('Email жаз'),
-        password: z.string().min(6, 'Password жаз'),
-    })
+    const schema = z
+        .object({
+            name: z.string().min(3, 'Атынды жаз'),
+            email: z.string().email('Email жаз'),
+            password: z.string().min(6, 'Password жаз'),
+            confirm: z.string(),
+            role: z.string(),
+        })
+        .refine((data) => data.password === data.confirm, {
+            message: 'Пароль окшош болуш керек',
+            path: ['confirm'],
+        })
 
     type FormSchema = (typeof schema)['_output']
 
@@ -27,6 +35,8 @@ const SignUp = () => {
             name: '',
             email: '',
             password: '',
+            confirm: '',
+            role: UserRoles.USER,
         },
         mode: 'onBlur',
         resolver: zodResolver(schema),
@@ -35,7 +45,7 @@ const SignUp = () => {
     const submitHandler = (values: FormSchema) => {
         console.log(values)
 
-        dispatch(signIn(values))
+        dispatch(signUp(values))
             .unwrap()
             .then(() => navigate('/'))
             .catch((e) => setLoginError(e.response.data.message))
@@ -75,6 +85,16 @@ const SignUp = () => {
                         />
                         {formState.errors.password && (
                             <Error>{formState.errors.password.message}</Error>
+                        )}
+                        <TextField
+                            error={!!formState.errors.confirm}
+                            {...register('confirm', {
+                                required: 'Please enter your confirm',
+                            })}
+                            label="Confirm"
+                        />
+                        {formState.errors.confirm && (
+                            <Error>{formState.errors.confirm.message}</Error>
                         )}
                         <Button type="submit">Sign up</Button>
                         <Link to="/signin">Have an account</Link>
