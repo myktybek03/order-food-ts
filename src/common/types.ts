@@ -11,3 +11,12 @@ export interface Meal {
     amount: string
     description: string
 }
+
+export type Column<T> = {
+    header: string
+    key: string
+    minWidth?: string | number
+    align?: 'left' | 'right' | 'center'
+    index?: boolean
+    render?: (meal: T) => JSX.Element
+}

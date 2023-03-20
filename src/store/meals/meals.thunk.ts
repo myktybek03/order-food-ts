@@ -21,3 +21,22 @@ export const getAllMeals = createAsyncThunk(
         }
     }
 )
+
+export const deleteMeal = createAsyncThunk(
+    'meal/deleteMeal',
+    async (id: string, { dispatch, rejectWithValue }) => {
+        try {
+            await mealsService.removeMeal(id)
+            return dispatch(getAllMeals())
+        } catch (e) {
+            if (isAxiosError(e)) {
+                const error = e as AxiosError<{
+                    status: number
+                    message: string
+                }>
+                return rejectWithValue(error.response?.data.message)
+            }
+            return rejectWithValue('Something went wrong')
+        }
+    }
+)
