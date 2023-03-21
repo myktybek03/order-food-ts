@@ -4,7 +4,11 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { deleteMeal, getAllMeals } from '../../store/meals/meals.thunk'
+import {
+    deleteMeal,
+    editMeal,
+    getAllMeals,
+} from '../../store/meals/meals.thunk'
 import { AppDispatch, RootState } from '../../store/store'
 import { Column, Meal } from '../../common/types'
 import AppTable from '../../components/UI/Table'
@@ -33,8 +37,6 @@ const Meals = () => {
     }
 
     const deleteMealHandler = (id: string) => {
-        console.log(id)
-
         dispatch(deleteMeal(id))
     }
 
@@ -55,13 +57,14 @@ const Meals = () => {
             key: 'title',
         },
         {
-            header: 'Price',
-            key: 'price',
-        },
-        {
             header: 'Description',
             key: 'description',
         },
+        {
+            header: 'Price',
+            key: 'price',
+        },
+
         {
             header: 'Actions',
             key: 'actions',
@@ -78,9 +81,9 @@ const Meals = () => {
         },
     ]
 
-    const saveHandler = (values: FormSchema) => {
-        // dispatch(yourAction(values))
-        console.log(values)
+    const saveHandler = (id: string, values: FormSchema) => {
+        dispatch(editMeal({ id, values }))
+        // console.log(values)
     }
 
     const isModalOpen = !!params.get('modal')

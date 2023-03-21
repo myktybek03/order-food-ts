@@ -20,3 +20,12 @@ export type Column<T> = {
     index?: boolean
     render?: (meal: T) => JSX.Element
 }
+
+export type EditMeal = {
+    id: string
+    values: {
+        price: number
+        title: string
+        description: string
+    }
+}

@@ -5,6 +5,8 @@ import * as zod from 'zod'
 import { useSearchParams } from 'react-router-dom'
 import { useEffect } from 'react'
 import mealsService from '../../../../api/mealsService'
+import { addMeals } from '../../../../store/meals/meals.thunk'
+import useAppDispatch from '../../../../hooks/useAppDispatch'
 
 const schema = zod.object({
     title: zod.string().nonempty(),
@@ -16,7 +18,7 @@ export type FormSchema = (typeof schema)['_output']
 type Props = {
     open: boolean
     onClose: () => void
-    onSubmit: (values: FormSchema) => void
+    onSubmit: (id: string, values: FormSchema) => void
 }
 
 const StyledBox = {
@@ -24,7 +26,8 @@ const StyledBox = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 400,
+    width: 500,
+    height: 400,
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
@@ -33,6 +36,7 @@ const StyledBox = {
 
 const MealModal = ({ open, onClose, onSubmit }: Props) => {
     const [searchParams, setSearchParams] = useSearchParams()
+    const dispatch = useAppDispatch()
 
     const { register, handleSubmit, formState, reset } = useForm({
         defaultValues: {
@@ -50,10 +54,15 @@ const MealModal = ({ open, onClose, onSubmit }: Props) => {
                 reset(data.data)
             })
         }
-    })
+    }, [open])
+
+    const id = searchParams.get('mealId') || '0'
 
     const submitHandler = (values: FormSchema) => {
-        onSubmit(values)
+        open && searchParams.get('modal') === 'edit'
+            ? onSubmit(id, values)
+            : dispatch(addMeals(values)).then(() => onClose())
+        console.log(values)
     }
 
     return (

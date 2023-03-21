@@ -1,5 +1,5 @@
 import { Meal } from '../common/types'
-import { axiosInstance } from '../config/axiosInstance'
+import { FormSchema } from '../components/admin/pages/meals/MealModal'
 import { mainApi } from './instances'
 
 type AllMealsResponse = {
@@ -18,7 +18,14 @@ const getMealById = (id: string) => {
 }
 
 const removeMeal = (id: string) => {
-    return axiosInstance.delete(`foods/${id}`)
+    return mainApi.delete<AllMealsResponse>(`foods/${id}`)
+}
+const addMeal = (data: FormSchema) => {
+    return mainApi.post('/foods', data)
 }
 
-export default { getAllMeals, removeMeal, getMealById }
+const editMeal = (id: string, values: FormSchema) => {
+    return mainApi.put(`foods/${id}`, values)
+}
+
+export default { getAllMeals, getMealById, removeMeal, addMeal, editMeal }
