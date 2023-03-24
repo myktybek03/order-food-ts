@@ -1,8 +1,6 @@
-import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { RootState } from '../store/store'
-
 import ProtectedRoute from './ProtectedRoute'
 import UserLayout from '../layout/user'
 import AdminLayout from '../layout/admin'
@@ -10,7 +8,9 @@ import SignIn from '../pages/guest/SignIn'
 import { UserRoles } from '../common/types'
 import SignUp from '../pages/guest/SignUp'
 import Meals from '../pages/admin/Meals.page'
-// import SignUp from '../pages/guest/SignUp'
+import Orders from '../pages/admin/Orders.page'
+import MealsUser from '../pages/user/Meals.page'
+import Order from '../pages/user/Order.page'
 
 const AppRoutes = () => {
     const role = useSelector((state: RootState) => state.auth.user.role)
@@ -39,7 +39,7 @@ const AppRoutes = () => {
                                 UserRoles.USER,
                             ])}
                             fallBackPath="/admin/meals"
-                            component={() => <p>MealsPage</p>}
+                            component={MealsUser}
                         />
                     }
                 />
@@ -52,7 +52,7 @@ const AppRoutes = () => {
                                 UserRoles.USER,
                             ])}
                             fallBackPath="/admin/meals"
-                            component={() => <p>Order</p>}
+                            component={Order}
                         />
                     }
                 />
@@ -114,7 +114,7 @@ const AppRoutes = () => {
                         <ProtectedRoute
                             isAllowed={isAllowed([UserRoles.ADMIN])}
                             fallBackPath="/"
-                            component={() => <p>Orders</p>}
+                            component={Orders}
                         />
                     }
                 />

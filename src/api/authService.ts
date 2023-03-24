@@ -1,5 +1,5 @@
 import { UserRoles } from '../common/types'
-import { axiosInstance } from '../config/axiosInstance'
+
 import { mainApi } from './instances'
 
 type SignInResponse = {
@@ -18,7 +18,7 @@ const signIn = (data: { email: string; password: string }) => {
 }
 
 const signUp = (data: { email: string; password: string; name: string }) => {
-    return axiosInstance.post<SignInResponse>('auth/register', data)
+    return mainApi.post<SignInResponse>('auth/register', data)
 }
 
 export default { signIn, signUp }

@@ -2,11 +2,9 @@ import { Grid, TextField, Typography, Button } from '@mui/material'
 import { styled } from '@mui/system'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
-import { AppDispatch } from '../../store/store'
 import { signIn } from '../../store/auth/auth.thunk'
 import useAppDispatch from '../../hooks/useAppDispatch'
 
@@ -22,7 +20,7 @@ const SignIn = () => {
 
     type FormSchema = (typeof schema)['_output']
 
-    const { getValues, handleSubmit, register, formState } = useForm({
+    const { handleSubmit, register, formState } = useForm({
         defaultValues: {
             email: '',
             password: '',
@@ -63,7 +61,9 @@ const SignIn = () => {
                         {formState.errors.password && (
                             <Error>{formState.errors.password.message}</Error>
                         )}
-                        <Button type="submit">Sign In</Button>
+                        <ButtonsStyle>
+                            <ButtonStyle type="submit">Sign In</ButtonStyle>
+                        </ButtonsStyle>
                         <Link to="/signup">{`Don't have account`}</Link>
                     </FormGrid>
                 </form>
@@ -77,14 +77,14 @@ export default SignIn
 const MainGrid = styled(Grid)(() => ({
     display: 'flex',
     justifyContent: 'center',
-    marginTop: '100px',
+    marginTop: '200px',
 }))
 
 const GridContainer = styled(Grid)(() => ({
     background: '#fff',
     width: '600px',
     padding: '20px',
-    border: '3px solid #00BFFF',
+    border: '3px solid #8A2B06',
     borderRadius: '10px',
 }))
 
@@ -97,4 +97,20 @@ const FormGrid = styled(Grid)(() => ({
 const Error = styled(Typography)(() => ({
     color: '#f00',
     textAlign: 'center',
+}))
+
+const ButtonsStyle = styled(Grid)(() => ({
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: '10px',
+}))
+
+const ButtonStyle = styled(Button)(() => ({
+    backgroundColor: '#8A2B06',
+    color: '#ffff',
+    padding: '10px 30px',
+    '&:hover': {
+        background: '#451907',
+    },
 }))

@@ -1,7 +1,8 @@
 import { Grid, styled } from '@mui/material'
-import React, { useCallback, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import Header from './Header'
+import Basket from './basket/Basket'
 
 const UserLayout = () => {
     const [isBasketVisible, setBasketVisible] = useState(false)
@@ -13,6 +14,7 @@ const UserLayout = () => {
     return (
         <>
             <Header onShowBasket={showBasketHandler} />
+            <Basket open={isBasketVisible} onClose={showBasketHandler} />
             <GridStyle>
                 <Outlet />
             </GridStyle>

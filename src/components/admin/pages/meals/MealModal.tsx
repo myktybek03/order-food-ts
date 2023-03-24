@@ -1,4 +1,4 @@
-import { Modal, Grid, TextField, Button, Box } from '@mui/material'
+import { Modal, Grid, TextField, Button, Box, styled } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as zod from 'zod'
@@ -27,9 +27,8 @@ const StyledBox = {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: 500,
-    height: 400,
+    height: 300,
     bgcolor: 'background.paper',
-    border: '2px solid #000',
     boxShadow: 24,
     p: 4,
 }
@@ -68,8 +67,8 @@ const MealModal = ({ open, onClose, onSubmit }: Props) => {
     return (
         <Modal open={open} onClose={onClose}>
             <Box sx={StyledBox}>
-                <Grid>
-                    <form onSubmit={handleSubmit(submitHandler)}>
+                <GridStyle>
+                    <FormStyle onSubmit={handleSubmit(submitHandler)}>
                         <TextField
                             {...register('title')}
                             label="Title"
@@ -86,25 +85,51 @@ const MealModal = ({ open, onClose, onSubmit }: Props) => {
                             label="Price"
                             error={!!formState.errors.price}
                         />
-                        <Button
-                            variant="outlined"
-                            color="info"
-                            onClick={onClose}
-                        >
-                            Cancel
-                        </Button>
-                        <Button
-                            type="submit"
-                            variant="outlined"
-                            color="primary"
-                        >
-                            Save
-                        </Button>
-                    </form>
-                </Grid>
+                        <ButtonsStyle>
+                            <ButtonStyle
+                                type="submit"
+                                variant="outlined"
+                                color="primary"
+                            >
+                                Save
+                            </ButtonStyle>
+                            <ButtonStyle
+                                variant="outlined"
+                                color="info"
+                                onClick={onClose}
+                            >
+                                Cancel
+                            </ButtonStyle>
+                        </ButtonsStyle>
+                    </FormStyle>
+                </GridStyle>
             </Box>
         </Modal>
     )
 }
 
 export default MealModal
+
+const FormStyle = styled('form')(() => ({
+    display: 'grid',
+    gap: '10px',
+}))
+
+const GridStyle = styled(Grid)(() => ({
+    backgroundColor: '#fff',
+}))
+
+const ButtonsStyle = styled(Grid)(() => ({
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    gap: '10px',
+}))
+
+const ButtonStyle = styled(Button)(() => ({
+    backgroundColor: '#8A2B06',
+    color: '#ffff',
+    '&:hover': {
+        background: '#451907',
+    },
+}))

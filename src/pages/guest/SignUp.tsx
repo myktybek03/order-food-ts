@@ -30,7 +30,7 @@ const SignUp = () => {
 
     type FormSchema = (typeof schema)['_output']
 
-    const { getValues, handleSubmit, register, formState } = useForm({
+    const { handleSubmit, register, formState } = useForm({
         defaultValues: {
             name: '',
             email: '',
@@ -96,7 +96,9 @@ const SignUp = () => {
                         {formState.errors.confirm && (
                             <Error>{formState.errors.confirm.message}</Error>
                         )}
-                        <Button type="submit">Sign up</Button>
+                        <ButtonsStyle>
+                            <ButtonStyle type="submit">Sign up</ButtonStyle>
+                        </ButtonsStyle>
                         <Link to="/signin">Have an account</Link>
                     </FormGrid>
                 </form>
@@ -110,14 +112,14 @@ export default SignUp
 const MainGrid = styled(Grid)(() => ({
     display: 'flex',
     justifyContent: 'center',
-    marginTop: '100px',
+    marginTop: '200px',
 }))
 
 const GridContainer = styled(Grid)(() => ({
     background: '#fff',
     width: '600px',
     padding: '20px',
-    border: '3px solid #00BFFF',
+    border: '3px solid #8A2B06',
     borderRadius: '10px',
 }))
 
@@ -130,4 +132,20 @@ const FormGrid = styled(Grid)(() => ({
 const Error = styled(Typography)(() => ({
     color: '#f00',
     textAlign: 'center',
+}))
+
+const ButtonsStyle = styled(Grid)(() => ({
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: '10px',
+}))
+
+const ButtonStyle = styled(Button)(() => ({
+    backgroundColor: '#8A2B06',
+    color: '#ffff',
+    padding: '10px 30px',
+    '&:hover': {
+        background: '#451907',
+    },
 }))

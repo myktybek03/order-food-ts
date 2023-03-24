@@ -1,4 +1,4 @@
-import { Button, Grid } from '@mui/material'
+import { Button, Grid, styled } from '@mui/material'
 import IconButton from '@mui/material/IconButton/IconButton'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
@@ -90,9 +90,14 @@ const Meals = () => {
 
     return (
         <Grid>
-            <Button variant="contained" onClick={() => showModalHandler('add')}>
-                Add new meal
-            </Button>
+            <GridStyle>
+                <ButtonStyle
+                    variant="contained"
+                    onClick={() => showModalHandler('add')}
+                >
+                    Add new meal
+                </ButtonStyle>
+            </GridStyle>
             <MealModal
                 open={isModalOpen}
                 onClose={closeModalHandler}
@@ -110,3 +115,19 @@ const Meals = () => {
 }
 
 export default Meals
+
+const ButtonStyle = styled(Button)(() => ({
+    backgroundColor: '#8A2B06',
+    color: '#fff',
+    borderRadius: '10px',
+    padding: '10px 25px',
+    '&:hover': {
+        background: '#451907',
+    },
+}))
+
+const GridStyle = styled(Grid)(() => ({
+    display: 'flex',
+    justifyContent: 'center',
+    marginBottom: '30px',
+}))

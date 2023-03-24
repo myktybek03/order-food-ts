@@ -1,8 +1,6 @@
 import { AppBar, Button, Grid, Toolbar } from '@mui/material'
-import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { styled } from '@mui/system'
-import { useDispatch } from 'react-redux'
 import { signOut } from '../../store/auth/auth.thunk'
 import useAppDispatch from '../../hooks/useAppDispatch'
 
@@ -25,8 +23,8 @@ const AdminHeader = () => {
     }
 
     return (
-        <AppBar position="static">
-            <Toolbar>
+        <AppBar>
+            <ToolBarStyle>
                 <Appbar>
                     <StyledGrid>
                         {menus.map((item) => (
@@ -39,7 +37,7 @@ const AdminHeader = () => {
                         SignOut
                     </Button>
                 </Appbar>
-            </Toolbar>
+            </ToolBarStyle>
         </AppBar>
     )
 }
@@ -51,6 +49,10 @@ const Appbar = styled(Grid)(() => ({
     justifyContent: 'space-between',
     alignItems: 'center',
     width: '100%',
+}))
+
+const ToolBarStyle = styled(Toolbar)(() => ({
+    background: '#8A2B06',
 }))
 
 const StyledGrid = styled(Grid)(() => ({
@@ -68,6 +70,6 @@ const StyledNavLink = styled(NavLink)(() => ({
     },
 
     '&.active': {
-        color: '#f00',
+        color: 'aqua',
     },
 }))

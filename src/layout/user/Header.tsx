@@ -1,10 +1,11 @@
-import { Button, Grid, styled } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import { Button, styled } from '@mui/material'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import BasketButton from '../../components/user/BasketButton'
 import { signOut } from '../../store/auth/auth.thunk'
+import { getBasket } from '../../store/basket/basket.thunk'
 import { AppDispatch, RootState } from '../../store/store'
+import BusketButton from './basket/BusketButton'
 
 type Props = {
     onShowBasket: () => void
@@ -15,102 +16,103 @@ const Header = ({ onShowBasket }: Props) => {
     const isAuthorized = useSelector(
         (state: RootState) => state.auth.isAuthorized
     )
-    // const items = useSelector((state) => state.basket.items)
 
+    const items = useSelector((state: RootState) => state.basket.items)
     const [animationClass, setAnimationClass] = useState<string>('')
 
-    // const themeMode = useSelector((state) => state.ui.themeMode)
     const dispatch = useDispatch<AppDispatch>()
-    // useEffect(() => {
-    //     dispatch(getBasket())
-    // }, [dispatch])
-    // const calculateTotalAmount = () => {
-    //     const sum = items.reduce((s, item) => {
-    //         return s + item.amount
-    //     }, 0)
-    //     return sum
-    // }
-    // useEffect(() => {
-    //     setAnimationClass('bump')
-    //     const id = setTimeout(() => {
-    //         setAnimationClass('')
-    //     }, 300)
-    //     return () => {
-    //         clearTimeout(id)
-    //     }
-    // }, [items])
-    // const themeChangeHandler = () => {
-    //     const theme = themeMode === 'light' ? 'dark' : 'light'
-    //     dispatch(uiActions.changeTheme(theme))
-    // }
+
+    useEffect(() => {
+        dispatch(getBasket())
+    }, [dispatch])
+
+    const calculateTotalAmount = () => {
+        const sum = items.reduce((s, item) => {
+            return s + item.amount
+        }, 0)
+        return sum
+    }
+
+    useEffect(() => {
+        setAnimationClass('bump')
+
+        const id = setTimeout(() => {
+            setAnimationClass('')
+        }, 300)
+
+        return () => {
+            clearTimeout(id)
+        }
+    }, [items])
+
     const signOutHandler = () => {
         dispatch(signOut())
-        // navigate('/signin')
     }
+
     const signInHandler = () => {
         navigate('/signin')
     }
+
     const showBasketHandler = () => {
         return onShowBasket()
     }
-    const goToOrderPageHandler = () => {
-        // if (!isAuthorized) {
-        //     return showAuthModal(true)
-        // }
+
+    const goToOrder = () => {
         return navigate('/my-order')
     }
 
     return (
         <Container>
             <Logo onClick={() => navigate('/')}>ReactMeals</Logo>
-            <GridStyle>
-                <BasketButton
-                    className={animationClass}
-                    onClick={showBasketHandler}
-                    count={0}
-                />
-                {isAuthorized ? (
-                    <ButtonStyle onClick={signOutHandler}>Sign Out</ButtonStyle>
-                ) : (
-                    <ButtonStyle onClick={signInHandler}>Sign In</ButtonStyle>
-                )}
-            </GridStyle>
+            <BusketButton
+                className={animationClass}
+                onClick={showBasketHandler}
+                count={calculateTotalAmount()}
+            />
+
+            <StyledButton onClick={goToOrder} color="error" variant="contained">
+                My Orders
+            </StyledButton>
+
+            {isAuthorized ? (
+                <StyledButton onClick={signOutHandler} variant="contained">
+                    Sign Out
+                </StyledButton>
+            ) : (
+                <StyledButton onClick={signInHandler} variant="contained">
+                    Sign In
+                </StyledButton>
+            )}
         </Container>
     )
 }
 
 export default Header
 
-const Container = styled('header')(({ theme }) => ({
-    // position: 'fixed',
-    // top: 0,
+const Container = styled('header')(() => ({
+    position: 'fixed',
+    top: 0,
     display: 'flex',
-    justifyContent: 'space-between',
-    // width: '100%',
+    justifyContent: 'space-around',
+    width: '100%',
     height: '6.3125rem',
-    backgroundColor: theme.palette.primary.light,
-    padding: '0 7.5rem',
+    backgroundColor: '#8A2B06',
     alignItems: 'center',
     zIndex: 1,
 }))
+
 const Logo = styled('p')(() => ({
     fontWeight: 600,
     fontSize: '2.375rem',
     lineHeight: '3.5625rem',
-    color: '#FFFFFF',
+    color: '#ffffff',
     margin: 0,
 }))
 
-const GridStyle = styled(Grid)(() => ({
-    display: 'flex',
-    alignItems: 'center',
-    gap: '15px',
-}))
-
-const ButtonStyle = styled(Button)(() => ({
-    color: '#fff',
-    background: 'blue',
-    ':hover': {
-        background: '00bfff',
+const StyledButton = styled(Button)(() => ({
+    backgroundColor: '#5A1F08',
+    padding: '10px 20px',
+    '&:hover': {
+        background: '#451907',
     },
 }))
