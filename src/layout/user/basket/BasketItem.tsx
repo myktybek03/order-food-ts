@@ -28,12 +28,12 @@ const BasketItem = ({
                     <Amount>x{amount}</Amount>
                 </PriceAndAmountContainer>
                 <CounterContainer>
-                    <Button variant="outlined" onClick={decrementAmount}>
+                    <ButtonStyle variant="outlined" onClick={decrementAmount}>
                         <RemoveIcon />
-                    </Button>
-                    <Button variant="outlined" onClick={incrementAmount}>
+                    </ButtonStyle>
+                    <ButtonStyle variant="outlined" onClick={incrementAmount}>
                         <AddIcon />
-                    </Button>
+                    </ButtonStyle>
                 </CounterContainer>
             </Content>
         </Container>
@@ -93,4 +93,9 @@ const Content = styled('div')(() => ({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
+}))
+
+const ButtonStyle = styled(Button)(() => ({
+    color: '#b4461a',
+    border: '#b4461a',
 }))

@@ -9,7 +9,7 @@ type Props = {
 
 const TotalAmount = ({ price, onClose, onOrder }: Props) => {
     const orderButton =
-        price > 0 ? <Button onClick={onOrder}>Order</Button> : null
+        price > 0 ? <StyledButton onClick={onOrder}>Order</StyledButton> : null
 
     const fixedPrice = price.toFixed(2)
 
@@ -19,11 +19,10 @@ const TotalAmount = ({ price, onClose, onOrder }: Props) => {
                 <Label>Total amount</Label>
                 <Price>${fixedPrice}</Price>
             </InfoContainer>
-
             <ActionButtonsContainer>
-                <Button variant="outlined" onClick={onClose}>
+                <StyledButtonClose variant="outlined" onClick={onClose}>
                     close
-                </Button>
+                </StyledButtonClose>
                 {orderButton}
             </ActionButtonsContainer>
         </Container>
@@ -62,4 +61,25 @@ const ActionButtonsContainer = styled('div')(() => ({
 
 const Container = styled('div')(() => ({
     margin: '30px 0 0 0',
+}))
+
+const StyledButtonClose = styled(Button)(() => ({
+    color: '#5A1F08s',
+    backgroundColor: '#fff',
+    borderRadius: '30px',
+    border: '#5A1F08',
+    padding: '10px 25px',
+    '&:hover': {
+        color: '#451907',
+    },
+}))
+
+const StyledButton = styled(Button)(() => ({
+    backgroundColor: '#b4461a',
+    color: '#fff',
+    borderRadius: '30px',
+    padding: '10px 25px',
+    '&:hover': {
+        background: '#451907',
+    },
 }))
